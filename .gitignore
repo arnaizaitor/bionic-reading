@@ -164,6 +164,7 @@ input/*.epub
 input/*.pdf
 output/*.epub
 output/*.pdf
+output/*.mobi
 
 zips/*
 

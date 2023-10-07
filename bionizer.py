@@ -160,8 +160,6 @@ if(__name__ == '__main__'):
     shutil.make_archive(epub_path, 'zip', './')
     os.rename((epub_path + '.zip'), (epub_path + '.zip')[:-4])
 
-    # Generate output pdf from the EPUB file
-    print(f'epub_path: {epub_path}')
-    print(f'pdf_path: {epub_path[:-5]}.pdf')
-    converter = Epub2PdfConverter(epub_path, epub_path[:-5] + '.pdf')
+    pdf_path = epub_path[:-5] + '.pdf'
+    converter = Epub2PdfConverter(epub_path, pdf_path)
     converter.convert()
