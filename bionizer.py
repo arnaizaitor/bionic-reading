@@ -1,14 +1,16 @@
+import argparse
+from datetime import datetime
+
 from html.entities import name2codepoint
 from html.parser import HTMLParser
 from zipfile import ZipFile
 from math import ceil, log
-import argparse
 import shutil
 import string
 import re
 import os
 
-from datetime import datetime
+from src.epub2pdf import Epub2PdfConverter
 
 
 
@@ -157,3 +159,9 @@ if(__name__ == '__main__'):
     os.chdir(unzip_path)
     shutil.make_archive(epub_path, 'zip', './')
     os.rename((epub_path + '.zip'), (epub_path + '.zip')[:-4])
+
+    # Generate output pdf from the EPUB file
+    print(f'epub_path: {epub_path}')
+    print(f'pdf_path: {epub_path[:-5]}.pdf')
+    converter = Epub2PdfConverter(epub_path, epub_path[:-5] + '.pdf')
+    converter.convert()
