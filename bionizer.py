@@ -8,6 +8,8 @@ import string
 import re
 import os
 
+from datetime import datetime
+
 
 
 class MyHTMLParser(HTMLParser):
@@ -80,7 +82,12 @@ if(__name__ == '__main__'):
     args = parser.parse_args()
     file_path = args.epubfile
     file_name = os.path.basename(file_path)
-    epub_path = os.getcwd() + '/output' +'/bionic_' + file_name
+
+    # Generate timestamp
+    current_time = datetime.now()
+    formatted_timestamp = current_time.strftime("%Y%m%dTT%H%M%S")
+
+    epub_path = os.getcwd() + '/output' + f'/{formatted_timestamp}_' + 'bionic_' + file_name
     unzip_path_folder = file_name + '_zip/'
     unzip_path = os.getcwd() + '/zips/' + unzip_path_folder
 

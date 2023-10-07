@@ -1,8 +1,8 @@
 
-This is very rudimentary epub converter, but it will probably get things done. 
+This is very rudimentary epub converter, but it will probably get things done.
 
 Usage:
-```python brec.py myepubbook.epub```
+```python bionizer.py myepubbook.epub```
 
 The result would be a "bionic_myepubbook.epub" file and a "myepubbook.epub_zip" folder (this one you can delete or explore)
 

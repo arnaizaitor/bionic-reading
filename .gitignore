@@ -165,5 +165,7 @@ input/*.pdf
 output/*.epub
 input/*.pdf
 
+zips/*
+
 # Reports
 reports/*.txt
