@@ -66,87 +66,87 @@ def bolding(text):
                 new_part = ''
                 new_part = f"<b>{part[0:point]}</b>"
                 new_part += ''.join(part[point:])
-                new_text += ' ' + new_part 
-    return new_text      
+                new_text += ' ' + new_part
+    return new_text
 
 
 
 ####################################
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("epubfile", help="put a path to your epub file in here")
-args = parser.parse_args()
-file_path = args.epubfile
-file_name = os.path.basename(file_path)
-epub_path = os.getcwd() +'/bionic_' + file_name
-unzip_path_folder = file_name + '_zip/' 
-unzip_path = os.getcwd() + '/' + unzip_path_folder
+if(__name__ == '__main__'):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("epubfile", help="put a path to your epub file in here")
+    args = parser.parse_args()
+    file_path = args.epubfile
+    file_name = os.path.basename(file_path)
+    epub_path = os.getcwd() + '/output' +'/bionic_' + file_name
+    unzip_path_folder = file_name + '_zip/'
+    unzip_path = os.getcwd() + '/zips/' + unzip_path_folder
 
 
-try:
-    with ZipFile(file_path, 'r') as zipObj:
-        zipObj.extractall(unzip_path)
-except:
-    with ZipFile(os.getcwd() + '/' + file_path, 'r') as zipObj:
-        zipObj.extractall(unzip_path)
+    try:
+        with ZipFile(file_path, 'r') as zipObj:
+            zipObj.extractall(unzip_path)
+    except:
+        with ZipFile(os.getcwd() + '/' + file_path, 'r') as zipObj:
+            zipObj.extractall(unzip_path)
 
 
-####################################
+    ####################################
 
-first_tags = """<?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN' 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'>\n"""
-
-
-htmls = []
-# r=root, d=directories, f = files
-for r, d, f in os.walk(unzip_path):
-    for hfile in f:
-        if hfile[-4:] == 'html':
-            htmls.append(os.path.join(r, hfile))
+    first_tags = """<?xml version='1.0' encoding='utf-8'?>
+    <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN' 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'>\n"""
 
 
-for html in htmls:
-  
-    with open(html, 'r', encoding='utf-8') as f:
-        html_data = f.read()
-
-    data_html = []
-    parser = MyHTMLParser()
-    parser.feed(html_data)
-
-    full_html = ''
-    for html_part in data_html:
-        # print(html_part, '\n')
-        if html_part[0] == 'Data:':
-            # full_html += html_part[1]
-            # full_html += f"<b>{html_part[1]}</b>"
-            full_html += bolding(html_part[1])
-            
-
-        if len(html_part) == 2 and html_part[0][0] == 'Start tag:':
-            tag = '<' + html_part[0][1] 
-            full_attr = []
-            for attr in html_part[1][1]:
-                full_attr.append(attr[0] + f'="{attr[1]}"')
-            full_attr = ', '.join(full_attr)
-            if not full_attr:
-                tag += full_attr + '>'
-            else:
-                tag += ' ' + full_attr + '>'
-            full_html += tag
-        if html_part[0] == 'End tag:':
-            tag = f"</{html_part[1]}>"
-            full_html += tag
-    full_html = first_tags + full_html
-
-    with open(html, 'w', encoding='utf-8') as f:
-        f.write(full_html)
+    htmls = []
+    # r=root, d=directories, f = files
+    for r, d, f in os.walk(unzip_path):
+        for hfile in f:
+            if hfile[-4:] == 'html':
+                htmls.append(os.path.join(r, hfile))
 
 
-####################################
+    for html in htmls:
 
-os.chdir(unzip_path)
-shutil.make_archive(epub_path, 'zip', './')
-os.rename((epub_path + '.zip'), (epub_path + '.zip')[:-4])
+        with open(html, 'r', encoding='utf-8') as f:
+            html_data = f.read()
 
+        data_html = []
+        parser = MyHTMLParser()
+        parser.feed(html_data)
+
+        full_html = ''
+        for html_part in data_html:
+            # print(html_part, '\n')
+            if html_part[0] == 'Data:':
+                # full_html += html_part[1]
+                # full_html += f"<b>{html_part[1]}</b>"
+                full_html += bolding(html_part[1])
+
+
+            if len(html_part) == 2 and html_part[0][0] == 'Start tag:':
+                tag = '<' + html_part[0][1]
+                full_attr = []
+                for attr in html_part[1][1]:
+                    full_attr.append(attr[0] + f'="{attr[1]}"')
+                full_attr = ', '.join(full_attr)
+                if not full_attr:
+                    tag += full_attr + '>'
+                else:
+                    tag += ' ' + full_attr + '>'
+                full_html += tag
+            if html_part[0] == 'End tag:':
+                tag = f"</{html_part[1]}>"
+                full_html += tag
+        full_html = first_tags + full_html
+
+        with open(html, 'w', encoding='utf-8') as f:
+            f.write(full_html)
+
+
+    ####################################
+
+    os.chdir(unzip_path)
+    shutil.make_archive(epub_path, 'zip', './')
+    os.rename((epub_path + '.zip'), (epub_path + '.zip')[:-4])
