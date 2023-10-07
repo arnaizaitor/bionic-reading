@@ -160,8 +160,10 @@ cython_debug/
 #.idea/
 
 # Testing
-input/
-output/
+input/*.epub
+input/*.pdf
+output/*.epub
+input/*.pdf
 
 # Reports
 reports/*.txt
