@@ -21,6 +21,21 @@ class Epub2PdfConverter:
         for tag in soup.find_all():
             del tag['id']
 
+        # Remove or replace the 'class' attribute in all tags
+        for tag in soup.find_all():
+            if 'class' in tag.attrs:
+                del tag['class']  # Remove the 'class' attribute
+
+        # Remove the 'style' attribute in all tags
+        for tag in soup.find_all():
+            if 'style' in tag.attrs:
+                del tag['style']  # Remove the 'style' attribute
+
+        # TODO: Before removing all images, insert a page break before each image <br style="page-break-after:always">
+        # Find and remove all <img> tags
+        for img_tag in soup.find_all('img'):
+            img_tag.extract()  # Remove the <img> tag
+
         # Find all <p> tags and add a <br/> tag after each one
         for paragraph_tag in soup.find_all('p'):
             br_tag1 = soup.new_tag('br')

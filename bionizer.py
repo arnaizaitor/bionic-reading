@@ -77,7 +77,7 @@ def bolding(text):
 
 ####################################
 
-
+#TODO: clean up the html before bionizing it
 if(__name__ == '__main__'):
     parser = argparse.ArgumentParser()
     parser.add_argument("epubfile", help="put a path to your epub file in here")
