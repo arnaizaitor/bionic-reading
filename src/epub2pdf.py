@@ -7,7 +7,7 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 
-class EpubToPdfConverter:
+class Epub2PdfConverter:
     def __init__(self, input_file_path, output_file_path):
         self.input_file_path = input_file_path
         self.output_file_path = output_file_path
@@ -71,5 +71,5 @@ if __name__ == '__main__':
     input_file_path = args.input
     output_file_path = args.output
     # then pass them to the converter
-    converter = EpubToPdfConverter(input_file_path, output_file_path)
+    converter = Epub2PdfConverter(input_file_path, output_file_path)
     converter.convert()
