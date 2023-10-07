@@ -1,10 +1,11 @@
-import subprocess
 import sys
+import argparse
+import subprocess
 
-def convert_epub_to_mobi(input_file, output_file):
+def convert_pdf_to_epub(input_file, output_file):
     # TODO: Check file extensions
     try:
-        # Use ebook-convert command to convert EPUB to MOBI
+        # Use ebook-convert command to convert PDF to EPUB
         subprocess.run(['ebook-convert', input_file, output_file])
         print(f"Conversion completed. Output saved to {output_file}")
     except Exception as e:
@@ -12,8 +13,8 @@ def convert_epub_to_mobi(input_file, output_file):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python epub2mobi.py input.epub output.mobi")
+        print("Usage: python convert_epub_to_mobi.py input.pdf output.epub")
     else:
         input_file = sys.argv[1]
         output_file = sys.argv[2]
-        convert_epub_to_mobi(input_file, output_file)
+        convert_pdf_to_epub(input_file, output_file)
